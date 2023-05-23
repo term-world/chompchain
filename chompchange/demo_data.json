@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "timestamp": 1684856801,
+    "algorithm": "sha256",
+    "encoding": "utf_8",
+    "security": true
+  },
+  "offset": 1,
+  "path": [
+    [
+      -1,
+      "ebcad2ad1c092b8ddf675f417a645c59de35fe74ca72ceac9b2006eaeb4387d9"
+    ],
+    [
+      -1,
+      "ccc29ae0e02a77b0f4578c1ac17493d79cf4262104929ac804f91fc4e7ac5af0"
+    ]
+  ]
+}
