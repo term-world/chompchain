@@ -1,4 +1,5 @@
 from pymerkle import MerkleTree, verify_inclusion, verify_consistency
+import json
 
 tree = MerkleTree()
 
@@ -14,8 +15,9 @@ verify_inclusion('bar', tree.root, proof)
 #This way we would be proving the trees are consistant with one another
 #This line creates a serialized version of the proof and store it in a theoretical json that would be couchdb
 #we would need to create another file or way to store the tree itself
+serialized = proof.serialize()
 with open('demo_data.json', 'w') as f:
-  json.dump(proof.serialize(),f,indent = 2)
+  json.dump(serialized,f,indent = 2)
 
 # Save current state
 sublength = tree.length
@@ -36,3 +38,5 @@ print("Root of Tree:\n",tree.root, "\nLeaves of the Tree:")
 for x in range(tree.length):
     print(tree.leaf(x))
 
+deserialized = proof.deserialize(serialized)
+print(deserialized)
