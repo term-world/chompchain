@@ -5,8 +5,6 @@ with open('demo_data.json', 'r') as f:
     serialized = json.load(f)
 
     tree = MerkleTree()
-    for data in ['foo', 'bar', 'baz', 'qux', 'quux']:
-        tree.append_entry(data)
     proof = tree.prove_inclusion('bar')
 
     print(proof)
