@@ -1,9 +1,9 @@
 import setuptools
 
 setuptools.setup(
-    name="chompchange",
+    name="chompchain",
     version="0.1",
-    packages=['chompchange'],
+    packages=['chompchain'],
     include_package_data=True,
     description='Global blockchain supporting term-world.',
     long_description=open('README.md', 'r').read(),
