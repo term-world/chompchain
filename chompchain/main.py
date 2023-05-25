@@ -13,7 +13,8 @@ def store(block: Block = ()):
     conn.request.put(
         doc_id = block.hash,
         doc = block.data,
-        attachment = block.tree.pickle_data()
+        attachment = block.tree.pickle_data(),
+        name = "tree.pkl"
     )
 
 def main():
