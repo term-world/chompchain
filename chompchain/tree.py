@@ -18,7 +18,7 @@ class Tree:
             print("invalid entry")
             return
 
-    def is_consistant(self,sublength,subroot):
+    def is_consistent(self,sublength,subroot):
         try:
             proof = self.merkle.prove_consistency(sublength, subroot)
             verify_consistency(subroot, self.merkle.root, proof)
