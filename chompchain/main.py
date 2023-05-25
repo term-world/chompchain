@@ -3,12 +3,18 @@ from glob import glob
 
 from block import Block
 from transaction import Transaction
+from couchsurf import Connection
 
 def transmit(block: Block = ()):
     pass
 
 def store(block: Block = ()):
-    pass
+    conn = Connection("blocks")
+    conn.request.put(
+        doc_id = block.hash,
+        doc = block.data,
+        attachment = block.tree.pickle_data()
+    )
 
 def main():
     txns = []
@@ -21,7 +27,7 @@ def main():
             txns.append(txn)
 
     block = Block(txns)
-    print(block)
+    store(block)
 
 if __name__ == "__main__":
     main()
