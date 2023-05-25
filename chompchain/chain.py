@@ -7,8 +7,6 @@ from couchsurf import Connection
 
 class Chain:
 
-    """ Design of the chain has changed quite a bit """
-
     def __init__(self):
         self.conn = Connection("blocks")
         self.blocks = self.get_all_blocks()
@@ -27,6 +25,8 @@ class Chain:
         return None
 
     def add_block(self, block):
+        tree_length = self.tree.merkle.length
+        tree_root = self.tree.merkle.root
         hashes = [block["_id"] for block in self.blocks]
         # Prevent duplicate blocks for testing
         if block.hash not in hashes:
@@ -37,6 +37,8 @@ class Chain:
                 attachment = block.tree.pickle_data(),
                 name = "tree.pkl"
             )
+        self.tree.append_data(block.txns)
+        self.tree.is_consistent(tree_length, tree_root)
 
     def prove_block(self, id: str = "") -> bool:
         block = self.__retrieve_single_block(id)

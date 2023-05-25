@@ -22,10 +22,9 @@ class Tree:
         try:
             proof = self.merkle.prove_consistency(sublength, subroot)
             verify_consistency(subroot, self.merkle.root, proof)
-            print("verified")
             return proof
         except:
-            print("invalid entry")
+            print("Invalid tree!")
             return
 
     def pickle_data(self):
