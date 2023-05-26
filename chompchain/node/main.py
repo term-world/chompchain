@@ -11,7 +11,7 @@ def transmit(block: Block = ()):
 def main():
     txns = []
     chain = Chain()
-    for file in glob("../mempool/*.json"):
+    for file in glob("../../mempool/*.json"):
         with open(file, "r") as fh:
             values = json.load(fh)
             txn = Transaction(**values)
