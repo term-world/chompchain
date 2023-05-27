@@ -37,8 +37,6 @@ class Chain:
                 attachment = block.tree.pickle_data(),
                 name = "tree.pkl"
             )
-        self.tree.append_data(block.txns)
-        self.tree.is_consistent(tree_length, tree_root)
 
     def prove_block(self, id: str = "") -> bool:
         block = self.__retrieve_single_block(id)
@@ -68,4 +66,4 @@ class Chain:
     def latest_block(self):
         if len(self.blocks) > 0:
             return self.blocks[0]
-        return 0
+        return {"_id": 0}
