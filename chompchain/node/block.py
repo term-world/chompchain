@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 from tree import Tree
-
+import getpass
 from chain import Chain
 from transaction import Transaction
 
@@ -13,8 +13,8 @@ class Block:
         self.hash = self.__assign_hash().decode('utf-8')
         self.timestamp = datetime.now().timestamp() # DO NOT HASH
         self.data = {
-            "txns": [str(txn) for txn in transactions],
-            "timestamp": self.timestamp
+            "user":getpass.getuser(),
+            "cmd": "cd main" #TODO: import command inputted
         }
 
     def __assign_hash(self) -> str:
