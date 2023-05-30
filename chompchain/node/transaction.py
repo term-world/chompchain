@@ -8,14 +8,6 @@ class Transaction:
         for arg in kwargs:
             setattr(self, arg, kwargs[arg])
 
-        # Transactions which are not coin exchange should
-        # "sign themselves" in order to guarantee integrity
-
-        # The plan here would be for each node to have a private
-        # hash or key generated on startup which would then sign
-        # transactions and somehow transmit its public key with
-        # the block to network for verification
-
         if "hash" not in kwargs:
             hash = hashlib.new('sha256')
             hash.update(self.__str__().encode())
@@ -25,5 +17,7 @@ class Transaction:
             time = datetime.now().timestamp()
             setattr(self, "timestamp", time)
 
+        # TODO: Need to force wallet signature here
+
     def __str__(self):
-        return json.dumps(self.__dict__)
+        return json.dumps(self.__dict__, separators = (',', ':'))

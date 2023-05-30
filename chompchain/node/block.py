@@ -26,7 +26,7 @@ class Block:
         for txn in self.txns:
             data = txn.__dict__.items()
             txn = {k:v for k,v in data if not k in ["hash", "timestamp"]}
-            self.tree.append_data(txn)
+            self.tree.append_data(json.dumps(txn, separators = (',', ':')))
 
     def __str__(self) -> str:
         return json.dumps({
@@ -34,4 +34,4 @@ class Block:
             "txns": [str(txn) for txn in self.txns],
             "prev_hash": self.prev_hash,
             "timestamp": self.timestamp
-        })
+        }, separators = (',', ':'))
