@@ -13,8 +13,8 @@ class Block:
         self.hash = self.__assign_hash().decode('utf-8')
         self.timestamp = datetime.now().timestamp() # DO NOT HASH
         self.data = {
-            "user":getpass.getuser(),
-            "cmd": "cd main" #TODO: import command inputted
+            "txns": [str(txn) for txn in transactions],
+            "timestamp": self.timestamp
         }
 
     def __assign_hash(self) -> str:
@@ -25,7 +25,7 @@ class Block:
         self.tree = Tree()
         for txn in self.txns:
             data = txn.__dict__.items()
-            txn = {k:v for k,v in data if not k in ["hash", "timestamp"]}
+            txn = {k:v for k,v in data if not k in ["hash", "timestamp", "signature"]}
             self.tree.append_data(json.dumps(txn, separators = (',', ':')))
 
     def __str__(self) -> str:

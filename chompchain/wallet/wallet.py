@@ -1,5 +1,7 @@
 import os
+from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
+from Crypto.Signature import PKCS1_v1_5
 
 class Wallet:
 
@@ -34,3 +36,9 @@ class Wallet:
 
     def __broadcast_keys(self):
         pass
+
+    def sign(self, transaction: str = ""):
+        signer = PKCS1_v1_5.new(RSA.import_key(self.keys["cc_rsa"]))
+        signature = SHA256.new()
+        signature.update(transaction.encode('utf-8'))
+        return signer.sign(signature).hex()
