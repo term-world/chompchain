@@ -24,8 +24,10 @@ def main():
     block = Block(txns)
     chain.add_block(block)
     # Erase files
+    """
     for file in files:
         os.unlink(file)
+    """
 
 if __name__ == "__main__":
     main()
