@@ -12,8 +12,9 @@ class Wallet:
             os.mkdir(self.wallet_dir)
             self.__generate_keys()
             self.__set_permissions()
-            self.__broadcast_keys()
-        else: self.__open_keys()
+        else: self.__open_keys()   
+        self.__broadcast_keys()
+
 
     def __generate_keys(self):
         private_key = RSA.generate(4096)
@@ -40,7 +41,7 @@ class Wallet:
         payload = {
             "user": "username",  # Replace with the actual username
             "key": {
-                    "public_key": self.keys["cc_rsa.pub"].export_key().decode()
+                    "public_key": self.keys["cc_rsa.pub"].decode()
             }
         }
         try:
