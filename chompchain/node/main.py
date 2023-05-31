@@ -2,9 +2,9 @@ import json
 import os
 from glob import glob
 
-from block import Block
-from chain import Chain
-from transaction import Transaction
+from .block import Block
+from .chain import Chain
+from .transaction import Transaction
 
 def transmit(block: Block = ()):
     pass
