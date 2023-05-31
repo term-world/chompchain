@@ -1,4 +1,6 @@
 import os
+import json
+import requests
 from Crypto.PublicKey import RSA
 
 class Wallet:
@@ -33,4 +35,21 @@ class Wallet:
             os.system(f"chmod 600 {self.wallet_dir}/{key}")
 
     def __broadcast_keys(self):
-        pass
+        url = "https://dir.chain.chompe.rs/keys"  # the actual URL to send the keys
+        
+        payload = {
+            "user": "username",  # Replace with the actual username
+            "key": {
+                    "public_key": self.keys["cc_rsa.pub"].export_key().decode()
+            }
+        }
+        try:
+            response = requests.post(url, json=payload)
+            if response.status_code == 200:
+                print("Keys successfully broadcasted.")
+            else:
+                print("Failed to broadcast keys. Status code:", response.status_code)
+        except requests.exceptions.RequestException as e:
+            print("Error occurred during key broadcasting:", e)
+
+wallet = Wallet()
