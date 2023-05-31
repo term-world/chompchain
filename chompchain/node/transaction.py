@@ -1,7 +1,7 @@
 import json
 import hashlib
 from datetime import datetime
-from wallet import Wallet
+from ..wallet.wallet import Wallet
 
 class Transaction:
 
@@ -19,8 +19,8 @@ class Transaction:
             setattr(self, "timestamp", time)
 
         if "signature" not in kwargs:
-            
-            setattr(self,"signature",signature)
+            wallet = Wallet()
+            setattr(self,"signature",wallet.keys())
         
 
     def __str__(self):
