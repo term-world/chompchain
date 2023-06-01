@@ -1,7 +1,10 @@
 import os
 import json
 import requests
-from Crypto.PublicKey import RSA
+from Crypto.Hash import SHA256
+from Crypto.Hash import keccak
+from Crypto.PublicKey import ECC
+from Crypto.Signature import DSS
 
 class Wallet:
 
@@ -12,45 +15,46 @@ class Wallet:
             os.mkdir(self.wallet_dir)
             self.__generate_keys()
             self.__set_permissions()
-        else: self.__open_keys()   
-        self.__broadcast_keys()
+            self.__derive_address()
+            self.__broadcast_keys()
 
-
-    def __generate_keys(self):
-        private_key = RSA.generate(4096)
-        self.keys["cc_rsa"] = private_key
-        self.keys["cc_rsa.pub"] = private_key.publickey()
+    def __generate_keys(self) -> None:
+        private_key = ECC.generate(curve = 'P-256')
+        self.keys[".cc.priv"] = private_key
+        self.keys[".cc.pub"] = private_key.public_key()
         for key in self.keys:
-            with open(f"{self.wallet_dir}/{key}", "wb") as fh:
-                fh.write(self.keys[key].export_key())
+            with open(f"{self.wallet_dir}/{key}", "wt") as fh:
+                fh.write(self.keys[key].export_key(format = "PEM"))
 
-    def __open_keys(self):
-        keys = ["cc_rsa", "cc_rsa.pub"]
-        for key in keys:
-            with open(f"{self.wallet_dir}/{key}", "rb") as fh:
-                self.keys[key] = fh.read()
-
-    def __set_permissions(self):
+    def __set_permissions(self) -> None:
         os.system(f"chmod 700 {self.wallet_dir}")
         for key in self.keys:
             os.system(f"chmod 600 {self.wallet_dir}/{key}")
 
-    def __broadcast_keys(self):
+    def __derive_address(self) -> None:
+        pub_key = self.keys[".cc.pub"].export_key(format = 'raw')
+        addr_hash = keccak.new(digest_bits=256)
+        addr_hash.update(pub_key)
+        self.address = f"0x{addr_hash.hexdigest()[-40:]}"
+
+    def __broadcast_keys(self) -> bool:
         url = "https://dir.chain.chompe.rs/keys"  # the actual URL to send the keys
-        
         payload = {
             "user": "username",  # Replace with the actual username
             "key": {
-                    "public_key": self.keys["cc_rsa.pub"].decode()
+                "public_key": str(self.keys[".cc.pub"])
             }
         }
         try:
             response = requests.post(url, json=payload)
             if response.status_code == 200:
-                print("Keys successfully broadcasted.")
-            else:
-                print("Failed to broadcast keys. Status code:", response.status_code)
+                return True
+            raise
         except requests.exceptions.RequestException as e:
-            print("Error occurred during key broadcasting:", e)
+            return False
 
-wallet = Wallet()
+    def sign(self, transaction: str = ""):
+        key = ECC.import_key(open(f"{self.wallet_dir}/.cc.priv").read())
+        hashed_tx = SHA256.new(transaction.encode('utf-8'))
+        signer = DSS.new(key, 'fips-186-3')
+        return signer.sign(hashed_tx).hex()
