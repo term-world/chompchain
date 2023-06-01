@@ -18,12 +18,12 @@ def main():
         print(file)
         with open(file, "r") as fh:
             values = json.load(fh)
-            txn = Transaction(**values).give_json()
+            txn = Transaction(**values).to_dict()
         if txn:
             txns.append(txn)
         
     block = Block(txns)
-    
+
     chain.add_block(block)
     # Erase files
     """

@@ -19,7 +19,8 @@ class Transaction:
         wallet = Wallet()
         setattr(self,"signature",wallet.sign(str(self)))
 
-    def give_json(self):
+    def to_dict(self) -> dict:
+        """ Returns dictionary repr of object properties """
         return self.__dict__
 
     def __str__(self):
