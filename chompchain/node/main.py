@@ -6,9 +6,6 @@ from .block import Block
 from .chain import Chain
 from .transaction import Transaction
 
-def transmit(block: Block = ()):
-    pass
-
 def main():
     txns = []
     chain = Chain()
