@@ -22,5 +22,8 @@ class Transaction:
         wallet = Wallet()
         setattr(self,"signature",wallet.sign(str(self)))
 
+    def give_json(self):
+        return self.__dict__
+
     def __str__(self):
         return json.dumps(self.__dict__, separators = (',', ':'))

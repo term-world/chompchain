@@ -18,10 +18,12 @@ def main():
         print(file)
         with open(file, "r") as fh:
             values = json.load(fh)
-            txn = Transaction(**values)
+            txn = Transaction(**values).give_json()
         if txn:
             txns.append(txn)
+        
     block = Block(txns)
+    block.tree.is_included({'user':'z','cmd':'ls'})
     chain.add_block(block)
     # Erase files
     """
