@@ -7,26 +7,23 @@ class Tree:
         self.merkle = MerkleTree()
         self.pickled_tree = None
 
-    def is_included(self,check):
+    def is_included(self,check) -> bool:
         check = str(check)
         try:
             proof = self.merkle.prove_inclusion(check)
             verify_inclusion(check,self.merkle.root,proof)
-            print("verified")
-            return proof
+            return True
         except:
-            print("invalid entry!")
-            return
+            return False
 
-    def is_consistent(self,sublength,subroot):
+    def is_consistent(self,sublength,subroot) -> bool:
         try:
             proof = self.merkle.prove_consistency(sublength, subroot)
             verify_consistency(subroot, self.merkle.root, proof)
-            print("verified")
-            return proof
+            return True
         except:
             print("invalid tree!")
-            return
+            return False
 
     def pickle_data(self):
         self.pickled_tree = pickle.dumps(self.merkle)

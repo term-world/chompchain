@@ -7,10 +7,7 @@ class Transaction:
 
     def __init__(self, **kwargs):
         """ Constructor """
-        self.data = {}
-
-        for arg in kwargs:
-            self.data[arg] = kwargs[arg]
+        self.data = kwargs
 
         hash = hashlib.new('sha256')
         hash.update(self.__str__().encode())

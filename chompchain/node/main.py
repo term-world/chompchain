@@ -23,7 +23,7 @@ def main():
             txns.append(txn)
         
     block = Block(txns)
-    block.tree.is_included({'user':'z','cmd':'ls'})
+    
     chain.add_block(block)
     # Erase files
     """
