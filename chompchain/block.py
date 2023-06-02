@@ -1,7 +1,6 @@
 import json
 from datetime import datetime
 from .tree import Tree
-import getpass
 from .chain import Chain
 from .transaction import Transaction
 
