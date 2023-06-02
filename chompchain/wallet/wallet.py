@@ -2,9 +2,10 @@ import os
 import json
 import requests
 from Crypto.Hash import SHA256
-from Crypto.Hash import keccak
 from Crypto.PublicKey import ECC
 from Crypto.Signature import DSS
+
+from address import Address
 
 class Wallet:
 
@@ -19,7 +20,7 @@ class Wallet:
             self.__generate_keys()
             self.__set_permissions()
         self.__load_keys()
-        self.__derive_address()
+        self.address = Address(self.keys[".cc.pub"])
 
     def __generate_keys(self) -> None:
         private_key = ECC.generate(curve = 'P-256')
@@ -38,12 +39,6 @@ class Wallet:
         for key in self.keys:
             with open(f"{self.wallet_dir}/{key}", "rt") as fh:
                 self.keys[key] = ECC.import_key(fh.read())
-
-    def __derive_address(self) -> None:
-        pub_key = self.keys[".cc.pub"].export_key(format = 'raw')
-        addr_hash = keccak.new(digest_bits=256)
-        addr_hash.update(pub_key)
-        self.address = f"0x{addr_hash.hexdigest()[-40:]}"
 
     def __broadcast_keys(self) -> bool:
         url = "https://dir.chain.chompe.rs/keys"  # the actual URL to send the keys
