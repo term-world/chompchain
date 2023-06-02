@@ -1,7 +1,7 @@
 import json
 import pickle
 
-from tree import Tree
+from .tree import Tree
 
 from couchsurf import Connection
 

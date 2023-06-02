@@ -1,9 +1,9 @@
 import json
 from datetime import datetime
-from tree import Tree
+from .tree import Tree
 
-from chain import Chain
-from transaction import Transaction
+from .chain import Chain
+from .transaction import Transaction
 
 class Block:
 
