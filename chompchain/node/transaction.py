@@ -5,9 +5,11 @@ from ..wallet.wallet import Wallet
 
 class Transaction:
 
-    def __init__(self, **kwargs):
+    def __init__(self, to: str = "", from: str = "", **kwargs):
         """ Constructor """
         self.data = kwargs
+
+        setattr(self, "from", from)
 
         hash = hashlib.new('sha256')
         hash.update(self.__str__().encode())
