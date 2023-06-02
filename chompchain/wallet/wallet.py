@@ -9,14 +9,17 @@ from Crypto.Signature import DSS
 class Wallet:
 
     def __init__(self):
-        self.keys = {}
+        self.keys = {
+            ".cc.priv": None,
+            ".cc.pub": None
+        }
         self.wallet_dir = os.path.expanduser("~/.wallet")
         if not os.path.isdir(self.wallet_dir):
             os.mkdir(self.wallet_dir)
             self.__generate_keys()
             self.__set_permissions()
-            self.__derive_address()
-            self.__broadcast_keys()
+        self.__load_keys()
+        self.__derive_address()
 
     def __generate_keys(self) -> None:
         private_key = ECC.generate(curve = 'P-256')
@@ -30,6 +33,11 @@ class Wallet:
         os.system(f"chmod 700 {self.wallet_dir}")
         for key in self.keys:
             os.system(f"chmod 600 {self.wallet_dir}/{key}")
+    
+    def __load_keys(self) -> dict:
+        for key in self.keys:
+            with open(f"{self.wallet_dir}/{key}", "rt") as fh:
+                self.keys[key] = ECC.import_key(fh.read())
 
     def __derive_address(self) -> None:
         pub_key = self.keys[".cc.pub"].export_key(format = 'raw')
