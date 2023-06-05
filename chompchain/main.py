@@ -6,9 +6,6 @@ from .block import Block
 from .chain import Chain
 from .transaction import Transaction
 
-def transmit(block: Block = ()):
-    pass
-
 def main():
     txns = []
     chain = Chain()
@@ -18,10 +15,12 @@ def main():
         print(file)
         with open(file, "r") as fh:
             values = json.load(fh)
-            txn = Transaction(**values)
+            txn = Transaction(**values).to_dict()
         if txn:
             txns.append(txn)
+        
     block = Block(txns)
+
     chain.add_block(block)
     # Erase files
     """

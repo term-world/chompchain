@@ -1,7 +1,6 @@
 import json
 from datetime import datetime
 from .tree import Tree
-import getpass
 from .chain import Chain
 from .transaction import Transaction
 
@@ -24,9 +23,9 @@ class Block:
     def __create_block_tree(self) -> None:
         self.tree = Tree()
         for txn in self.txns:
-            data = txn.__dict__.items()
+            data = txn.items()
             txn = {k:v for k,v in data if not k in ["hash", "timestamp", "signature"]}
-            self.tree.append_data(json.dumps(txn, separators = (',', ':')))
+            self.tree.append_data(txn['data'])
 
     def __str__(self) -> str:
         return json.dumps({

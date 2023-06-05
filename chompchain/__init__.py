@@ -1,6 +1,7 @@
-from .node import *
-from .wallet import *
-
-from .node import main
+from .block import *
+from .transaction import *
+from .chain import *
+from .main import *
 
 main.main()
+

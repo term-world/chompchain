@@ -5,12 +5,11 @@ from ..wallet.wallet import Wallet
 
 class Transaction:
 
-    def __init__(self, **kwargs):
+    def __init__(self, to: str = "", from: str = "", **kwargs):
         """ Constructor """
-        self.data = {}
+        self.data = kwargs
 
-        for arg in kwargs:
-            self.data[arg] = kwargs[arg]
+        setattr(self, "from", from)
 
         hash = hashlib.new('sha256')
         hash.update(self.__str__().encode())
@@ -21,6 +20,10 @@ class Transaction:
 
         wallet = Wallet()
         setattr(self,"signature",wallet.sign(str(self)))
+
+    def to_dict(self) -> dict:
+        """ Returns dictionary repr of object properties """
+        return self.__dict__
 
     def __str__(self):
         return json.dumps(self.__dict__, separators = (',', ':'))
