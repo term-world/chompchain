@@ -2,8 +2,8 @@ import json
 import os
 from glob import glob
 
-from block import Block
-from chain import Chain
+from .block import Block
+from .chain import Chain
 from chompchainwallet import Transaction
 from chompchainwallet import Wallet
 
@@ -17,10 +17,10 @@ def main():
         print(file)
         with open(file, "r") as fh:
             values = json.load(fh)
-            txn = Transaction(wallet,"CalebKendra","dluman",**values).to_dict()
+            txn = Transaction(to_addr = "CalebKendra",**values).to_dict()
         if txn:
             txns.append(txn)
-        
+
     block = Block(txns)
 
     chain.add_block(block)
