@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
-from tree import Tree
-from chain import Chain
+from .tree import Tree
+from .chain import Chain
 from chompchainwallet import Transaction
 
 class Block:

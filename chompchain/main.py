@@ -2,8 +2,8 @@ import json
 import os
 from glob import glob
 
-from block import Block
-from chain import Chain
+from .block import Block
+from .chain import Chain
 from chompchainwallet import Transaction
 from chompchainwallet import Wallet
 
