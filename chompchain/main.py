@@ -4,10 +4,12 @@ from glob import glob
 
 from .block import Block
 from .chain import Chain
-from .transaction import Transaction
+from chompchainwallet import Transaction
+from chompchainwallet import Wallet
 
 def main():
     txns = []
+    wallet = Wallet()
     chain = Chain()
     # Harvest transactions
     files = glob("/mempool/*.json")
@@ -15,10 +17,10 @@ def main():
         print(file)
         with open(file, "r") as fh:
             values = json.load(fh)
-            txn = Transaction(**values).to_dict()
+            txn = Transaction(wallet,to_addr = "100x4d967e796ca2bc965c6026fc79196f3cf94804f1afdc5fc41c8b7492cfedac81",**values).to_dict()
         if txn:
             txns.append(txn)
-        
+
     block = Block(txns)
 
     chain.add_block(block)

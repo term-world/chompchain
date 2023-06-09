@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from .tree import Tree
 from .chain import Chain
-from .transaction import Transaction
+from chompchainwallet import Transaction
 
 class Block:
 
