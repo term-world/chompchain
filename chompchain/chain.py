@@ -9,6 +9,11 @@ class Chain:
 
     def __init__(self):
         self.conn = Connection("blocks")
+        self.__make_chain()
+
+    def __make_chain(self):
+        # TODO: Make this more efficicent by grabbing
+        # all blocks not contained the leaf nodes?
         self.blocks = self.get_all_blocks()
         self.tree = self.__construct_tree()
 
