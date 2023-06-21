@@ -14,8 +14,11 @@ class Chain:
     def __make_chain(self):
         # TODO: Make this more efficicent by grabbing
         # all blocks not contained the leaf nodes?
-        self.blocks = self.get_all_blocks()
-        self.tree = self.__construct_tree()
+        try:
+            self.blocks = self.get_all_blocks()
+            self.tree = self.__construct_tree()
+        except:
+            print("Chain not started yet...")
 
     def __construct_tree(self):
         block_tree = Tree()
