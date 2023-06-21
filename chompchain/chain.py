@@ -16,9 +16,9 @@ class Chain:
         # all blocks not contained the leaf nodes?
         try:
             self.blocks = self.get_all_blocks()
-            self.tree = self.__construct_tree()
         except:
             print("Chain not started yet...")
+        self.tree = self.__construct_tree()
 
     def __construct_tree(self):
         block_tree = Tree()
