@@ -17,6 +17,9 @@ class Chain:
         try:
             self.blocks = self.get_all_blocks()
         except:
+            # TODO: Make genesis block? Or, do we leave that up
+            # to a manual process? I favor the latter.
+            self.blocks = []
             print("Chain not started yet...")
         self.tree = self.__construct_tree()
 
