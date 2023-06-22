@@ -30,7 +30,5 @@ def generate():
     chain.add_block(block)
 
     # Erase files
-    """
     for file in files:
         os.unlink(file)
-    """
