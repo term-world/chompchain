@@ -14,6 +14,8 @@ def generate():
 
     # Harvest transactions
     files = glob("/mempool/*.json")
+    # If no transactions in the pool, bail
+    if len(files) < 1: return
     for file in files:
         print(file)
         with open(file, "r") as fh:
