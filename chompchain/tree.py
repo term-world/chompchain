@@ -1,5 +1,5 @@
 import pickle
-from pymerkle import MerkleTree, verify_inclusion, verify_consistency
+from pymerkle import InmemoryTree as MerkleTree
 
 class Tree:
 
