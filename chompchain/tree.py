@@ -34,6 +34,6 @@ class Tree:
 
     def append_data(self,data):
         if type(data) == list:
-            for x in data: self.merkle.append_entry(str(x))
+            for x in data: self.merkle.append(bytes(x))
         else:
-            self.merkle.append_entry(str(data))
+            self.merkle.append(bytes(data))
