@@ -1,5 +1,5 @@
 import pickle
-from pymerkle import InmemoryTree as MerkleTree
+from pymerkle import InmemoryTree as MerkleTree,verify_consistency,verify_inclusion
 
 class Tree:
 
@@ -7,22 +7,29 @@ class Tree:
         self.merkle = MerkleTree()
         self.pickled_tree = None
 
-    def is_included(self,check) -> bool:
-        check = str(check)
+    def is_included(self,check: int) -> bool:
+        size = self.merkle.get_size()
         try:
-            proof = self.merkle.prove_inclusion(check)
-            verify_inclusion(check,self.merkle.root,proof)
+            proof = self.merkle.prove_inclusion(check,size)
+            verify_inclusion(
+                self.merkle.get_leaf(check),
+                self.merkle.get_state(size),
+                proof
+            )
             return True
         except:
             return False
 
-    def is_consistent(self,sublength,subroot) -> bool:
+    def is_consistent(self,sublength: int,subroot: int) -> bool:
         try:
             proof = self.merkle.prove_consistency(sublength, subroot)
-            verify_consistency(subroot, self.merkle.root, proof)
+            verify_consistency(
+                    self.merkle.get_state(sublength), 
+                    self.merkle.get_state(subroot), 
+                    proof
+                )
             return True
         except:
-            print("invalid tree!")
             return False
 
     def pickle_data(self):
@@ -32,7 +39,7 @@ class Tree:
     def unpickle_data(self):
         return pickle.loads(self.pickled_tree)
 
-    def append_data(self,data):
+    def append_data(self,data: any):
         if type(data) == list:
             for x in data: self.merkle.append(bytes(x))
         else:
