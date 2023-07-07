@@ -41,6 +41,6 @@ class Tree:
 
     def append_data(self,data: any):
         if type(data) == list:
-            for x in data: self.merkle.append(bytes(x))
+            for x in data: self.merkle.append(bytes(x, encoding='utf8'))
         else:
-            self.merkle.append(bytes(data))
+            self.merkle.append(bytes(data, encoding='utf8'))
