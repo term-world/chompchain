@@ -40,7 +40,8 @@ class Tree:
         return pickle.loads(self.pickled_tree)
 
     def append_data(self,data: any):
-        if type(data) == list:
-            for x in data: self.merkle.append(bytes(x, encoding='utf8'))
+        if isinstance(data,bytes):
+            self.merkle.append(data)
         else:
-            self.merkle.append(bytes(data, encoding='utf8'))
+            for x in list(data):
+                self.merkle.append(bytes(x,'utf-8'))
