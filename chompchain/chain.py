@@ -22,6 +22,7 @@ class Chain:
             self.blocks = []
             print("Chain not started yet...")
         self.tree = self.__construct_tree()
+        self.__save_tree()
 
     def __construct_tree(self):
         block_tree = Tree()
@@ -34,6 +35,10 @@ class Chain:
             block = filter(lambda blk: blk["_id"] != id, self.blocks)
             return list(block)[0]
         return None
+
+    def __save_tree(self):
+        with open('pickle.pkl','wb') as f:
+            pickle.dump(self.tree.pickle_data(),f)
 
     def add_block(self, block):
         tree_length = self.tree.merkle.length
@@ -48,6 +53,7 @@ class Chain:
                 attachment = block.tree.pickle_data(),
                 name = "tree.pkl"
             )
+        self.__save_tree()
 
     def prove_block(self, id: str = "") -> bool:
         block = self.__retrieve_single_block(id)
