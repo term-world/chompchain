@@ -37,7 +37,7 @@ class Chain:
         return None
 
     def __save_tree(self):
-        with open('full_chain.pkl','wb') as f:
+        with open('/chain/full_chain.pkl','wb') as f:
             pickle.dump(self.tree.pickle_data(),f)
 
     def add_block(self, block):

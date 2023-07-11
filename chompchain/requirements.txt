@@ -1,3 +1,0 @@
-arglite==0.6.0
-couchsurf==0.3
-pymerkle==5.0.3

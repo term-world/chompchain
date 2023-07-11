@@ -1,3 +1,4 @@
 arglite==0.6.0
+chompchain_wallet==0.1
 couchsurf==0.3
 pymerkle==5.0.3
