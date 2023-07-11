@@ -9,7 +9,7 @@ class Block:
     def __init__(self, transactions: list = []):
         self.txns = transactions
         self.__create_block_tree()
-        self.hash = self.__assign_hash().decode('utf-8')
+        self.hash = self.__assign_hash()
         self.timestamp = datetime.now().timestamp() # DO NOT HASH
         self.data = {
             "txns": [str(txn) for txn in transactions],

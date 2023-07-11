@@ -41,7 +41,7 @@ class Chain:
             pickle.dump(self.tree.pickle_data(),f)
 
     def add_block(self, block):
-        tree_length = self.tree.merkle.length
+        tree_length = self.tree.merkle.get_size()
         tree_root = self.tree.merkle.root
         hashes = [block["_id"] for block in self.blocks]
         # Prevent duplicate blocks for testing
