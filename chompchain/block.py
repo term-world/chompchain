@@ -18,7 +18,7 @@ class Block:
 
     def __assign_hash(self) -> str:
         """ Assigns block ID from Merkle tree """
-        return self.tree.merkle.root
+        return self.tree.merkle.root.value.hex()
 
     def __create_block_tree(self) -> None:
         self.tree = Tree()
